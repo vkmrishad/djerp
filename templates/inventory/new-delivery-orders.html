@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/plugins/images/favicon.png">
+    <title>ERP - New Delivery Orders</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+    <!-- animation CSS -->
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link id="bsdp-css" href="https://uxsolutions.github.io/bootstrap-datepicker/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="/static/css/colors/default.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond./static/js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header">
+    <!-- ============================================================== -->
+    <!-- Preloader -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Wrapper -->
+    <!-- ============================================================== -->
+    <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        {% block navbar %}
+            {% include 'inventory/navbar.html' %}
+        {% endblock %}
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        {% block sidebar %}
+            {% include 'inventory/sidebar.html' %}
+        {% endblock %}
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+            <div class="message_div"></div>
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">New Delivery Orders</h4> </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- .row -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <div class="form-horizontal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="col-md-4">Customer</label>
+                                                <div class="col-md-7">
+                                                    <select class="form-control selectpicker so_customer" data-live-search="true" name="so_customer">
+                                                        <option value=""></option>{% for contact in contact_list %}
+                                                        <option value="{{contact.first_name}}">{{contact.first_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label class="col-md-4">DO#</label>
+                                            <div class="col-md-7">
+                                                <input type="text" class="form-control" autocomplete="off" name="so_number">
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    </div>
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label class="col-md-4">LPO#</label>
+                                                <div class="col-md-7">
+                                                <input type="text" class="form-control" autocomplete="off" name="so_reference">
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <label class="col-md-4">Date</label>
+                                            <div class="col-md-7">
+                                                <input type="text" class="form-control" autocomplete="off" name="so_date">
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                           <table class="tablesaw table-bordered table-hover table tablesaw-swipe item_tbl" data-tablesaw-mode="swipe" id="table-988" style="">
+                                                <thead>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="tablesaw-cell-persist">Item Details</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">XS</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">S</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">M</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">L</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">XL</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">XXL</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">3XL</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col="" data-tablesaw-priority="3">Total</th>
+                                                        <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="4" style="display: none;">Id</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>  
+                                        </div>
+                                        <a href="#" class="add_item_new">+ Add Item</a>
+                                        <div class="pull-right m-t-30 text-right">
+                                            <h3><b>Total Amount:</b> <span class="item_total">0</span></h3> 
+                                            <input class="so_item_total" type="hidden" name="so_total">
+                                            </div>
+                                    </div>    
+                                </div>        
+                                <div class="form-group">
+                                    <div class="col-md-3" style="margin:10px;">
+                                        <button type="submit" class="btn btn-success item_smt">Save</button>
+                                        <button type="button" class="btn btn-default">Cancel</button>
+                                    </div>
+                                </div>                                                                      
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li><b>With Light sidebar</b></li>
+                                <li><a href="javascript:void(0)" theme="default" class="default-theme">1</a></li>
+                                <li><a href="javascript:void(0)" theme="green" class="green-theme">2</a></li>
+                                <li><a href="javascript:void(0)" theme="gray" class="yellow-theme">3</a></li>
+                                <li><a href="javascript:void(0)" theme="blue" class="blue-theme">4</a></li>
+                                <li><a href="javascript:void(0)" theme="purple" class="purple-theme">5</a></li>
+                                <li><a href="javascript:void(0)" theme="megna" class="megna-theme">6</a></li>
+                                <li><b>With Dark sidebar</b></li>
+                                <br/>
+                                <li><a href="javascript:void(0)" theme="default-dark" class="default-dark-theme">7</a></li>
+                                <li><a href="javascript:void(0)" theme="green-dark" class="green-dark-theme">8</a></li>
+                                <li><a href="javascript:void(0)" theme="gray-dark" class="yellow-dark-theme">9</a></li>
+                                <li><a href="javascript:void(0)" theme="blue-dark" class="blue-dark-theme">10</a></li>
+                                <li><a href="javascript:void(0)" theme="purple-dark" class="purple-dark-theme">11</a></li>
+                                <li><a href="javascript:void(0)" theme="megna-dark" class="megna-dark-theme working">12</a></li>
+                            </ul>
+                            <ul class="m-t-20 all-demos">
+                                <li><b>Choose other demos</b></li>
+                            </ul>
+                            <ul class="m-t-20 chatonline">
+                                <li><b>Chat option</b></li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/varun.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/genu.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/ritesh.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/arijit.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/govinda.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/hritik.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/john.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><img src="/static/plugins/images/users/pawandeep.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- /.container-fluid -->
+                {% block footer %}
+                {% include 'inventory/footer.html' %}
+                {% endblock %}
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script src="https://uxsolutions.github.io/bootstrap-datepicker/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <!--slimscroll JavaScript -->
+    <script src="/static/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/js/waves.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="/static/js/custom.min.js"></script>
+    <script src="/static/js/jasny-bootstrap.js"></script>
+    <!--Style Switcher -->
+    <script src="/static/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
+    <script type="text/javascript">
+
+    /*! tabletojson - v0.11.1 - Daniel White */
+!function(a){"use strict";a.fn.tableToJSON=function(b){var c={ignoreColumns:[],onlyColumns:null,ignoreHiddenRows:!0,ignoreEmptyRows:!1,headings:null,allowHTML:!1,includeRowId:!1,textDataOverride:"data-override",textExtractor:null};b=a.extend(c,b);var d=function(a){return void 0!==a&&null!==a},e=function(c){return d(b.onlyColumns)?-1===a.inArray(c,b.onlyColumns):-1!==a.inArray(c,b.ignoreColumns)},f=function(b,c){var e={},f=0;return a.each(c,function(a,c){f<b.length&&d(c)&&(e[b[f]]=c,f++)}),e},g=function(c,d,e){var f=a(d),g=b.textExtractor,h=f.attr(b.textDataOverride);return null===g||e?a.trim(h||(b.allowHTML?f.html():d.textContent||f.text())||""):a.isFunction(g)?a.trim(h||g(c,f)):"object"==typeof g&&a.isFunction(g[c])?a.trim(h||g[c](c,f)):a.trim(h||(b.allowHTML?f.html():d.textContent||f.text())||"")},h=function(c,d){var e=[],f=b.includeRowId,h="boolean"==typeof f?f:"string"==typeof f?!0:!1,i="string"==typeof f==!0?f:"rowId";return h&&"undefined"==typeof a(c).attr("id")&&e.push(i),a(c).children("td,th").each(function(a,b){e.push(g(a,b,d))}),e},i=function(a){var c=a.find("tr:first").first();return d(b.headings)?b.headings:h(c,!0)},j=function(c,h){var i,j,k,l,m,n,o,p=[],q=0,r=[];return c.children("tbody,*").children("tr").each(function(c,e){if(c>0||d(b.headings)){var f=b.includeRowId,h="boolean"==typeof f?f:"string"==typeof f?!0:!1;n=a(e);var r=n.find("td").length===n.find("td:empty").length?!0:!1;!n.is(":visible")&&b.ignoreHiddenRows||r&&b.ignoreEmptyRows||n.data("ignore")&&"false"!==n.data("ignore")||(q=0,p[c]||(p[c]=[]),h&&(q+=1,"undefined"!=typeof n.attr("id")?p[c].push(n.attr("id")):p[c].push("")),n.children().each(function(){for(o=a(this);p[c][q];)q++;if(o.filter("[rowspan]").length)for(k=parseInt(o.attr("rowspan"),10)-1,m=g(q,o),i=1;k>=i;i++)p[c+i]||(p[c+i]=[]),p[c+i][q]=m;if(o.filter("[colspan]").length)for(k=parseInt(o.attr("colspan"),10)-1,m=g(q,o),i=1;k>=i;i++)if(o.filter("[rowspan]").length)for(l=parseInt(o.attr("rowspan"),10),j=0;l>j;j++)p[c+j][q+i]=m;else p[c][q+i]=m;m=p[c][q]||g(q,o),d(m)&&(p[c][q]=m),q++}))}}),a.each(p,function(c,g){if(d(g)){var i=d(b.onlyColumns)||b.ignoreColumns.length?a.grep(g,function(a,b){return!e(b)}):g,j=d(b.headings)?h:a.grep(h,function(a,b){return!e(b)});m=f(j,i),r[r.length]=m}}),r},k=i(this);return j(this,k)}}(jQuery);  
+
+
+    $('.selectpicker').selectpicker({
+        size: 4,
+        noneSelectedText: 'Select'
+    });  
+        
+
+    $(document).ready(function() {
+        $('input[name=so_date]').datepicker({
+            format: "dd/mm/yyyy",
+            todayBtn: "linked",
+            orientation: "auto right",
+            autoclose: true
+        }).datepicker("setDate","today");
+    });  
+    
+
+    $('.add_item_new').click(function(e){
+        e.preventDefault()
+
+        $('.table-responsive').find('tbody').append('<tr><td class="title tablesaw-cell-persist"><div class="col-md-7"><div class="item_field" style="display: none;"></div><select class="form-control item_sel selectpicker" data-live-search="true" name="item-details" style="display:none"><option value=""></option>{% for item in item_group_list %}<option value="">{{item.item_group_name}}</option>{% endfor %}</select></div><div class="item_delete"><i class="fa fa-trash" aria-hidden="true"></i></div></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_xs"></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_s"/></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_m"/></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_l"/></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_xl"/></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_xxl"/></td><td  class="qty_td"><input type="text" value="0" class="item_qty qty_3xl"/></td><td class="item_total_qty">0</td><td style="display:none" class="item_id"></tr>')
+
+        $('.selectpicker').selectpicker({
+        size: 4,
+        noneSelectedText: 'Select'
+        });
+
+        $('.item_field').click(function(){
+            var parent = $(this).parents('tr') 
+            $(this).hide();
+            parent.find('.btn-group.item_sel').show();
+        })
+
+/*        $('.item_sel').mouseleave(function(){
+            var parent = $(this).parents('tr') 
+            item = $(this).find('option:selected').text()   
+            $(this).hide();
+            parent.find('.item_field').text(item);
+            parent.find('.item_field').show();
+
+            if (item==''){
+                parent.remove();
+            }
+        })*/
+
+        $('.item_delete').click(function(){
+            var parent = $(this).parents('tr')
+            parent.remove();
+
+            var length = $('.item_amt').length
+            var sum = 0
+            for (i=0;i<length;i++){
+                sum += parseInt($('.item_amt:eq('+i+')').text())
+            }
+
+            $('.item_total').text(sum.toFixed(2))
+            $('.so_item_total').val(sum.toFixed(2))
+        })
+
+        $('select.item_sel').change(function(){
+
+            var parent = $(this).parents('tr') 
+            item = $(this).find('option:selected').text()
+            parent.find('.btn-group.item_sel').hide();
+            parent.find('.item_field').text(item);
+            parent.find('.item_field').show();
+
+            var xs = parseInt(parent.find('.qty_xs').val())
+            var s = parseInt(parent.find('.qty_s').val())
+            var m = parseInt(parent.find('.qty_m').val())
+            var l = parseInt(parent.find('.qty_l').val())
+            var xl = parseInt(parent.find('.qty_xl').val())
+            var xxl = parseInt(parent.find('.qty_xxl').val())
+            var xxxl = parseInt(parent.find('.qty_3xl').val())
+            
+
+            if (item==''){
+                parent.remove();
+            }
+
+            $.ajax({
+                url: "/delivery-orders/get-item",
+                type: 'POST', 
+                cache: false,
+                async:false,
+                'contentType': 'application/json',
+                'data': JSON.stringify({
+                    'item': item,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'}),
+                'dataType': 'json',
+                success: function(data){
+                    //data = JSON.parse(data) 
+                    item_rate = JSON.parse(data['item_rate']) 
+                    item_id = JSON.parse(data['item_id']) 
+                    parent.find('.item_rate').text(item_rate)
+                    parent.find('.item_id').text(item_id)
+                }
+            }); 
+
+            var total_qty = xs+s+m+l+xl+xxl+xxxl
+
+            if(isNaN(total_qty)){
+                total_qty=0
+            }
+
+            $(this).parents('tr').find('.item_total_qty').text(total_qty)
+
+            var length = $('.item_total_qty').length
+            var sum = 0
+            for (i=0;i<length;i++){
+                sum += parseInt($('.item_total_qty:eq('+i+')').text())
+            }
+
+            $('.item_total').text(sum)
+            $('.so_item_total').val(sum)
+
+        })
+
+        $('.item_qty').on('input',function(){
+
+            var parent = $(this).parents('tr') 
+            item = parent.find('option:selected').text()
+
+            var xs = parseInt(parent.find('.qty_xs').val())
+            var s = parseInt(parent.find('.qty_s').val())
+            var m = parseInt(parent.find('.qty_m').val())
+            var l = parseInt(parent.find('.qty_l').val())
+            var xl = parseInt(parent.find('.qty_xl').val())
+            var xxl = parseInt(parent.find('.qty_xxl').val())
+            var xxxl = parseInt(parent.find('.qty_3xl').val())
+
+            if (!$.isNumeric($(this).val()) && !$(this).val()==''){
+                $(this).val($(this).val().slice(0,-1))
+            }
+
+/*            $.ajax({
+                url: "/sales-orders/get-item",
+                type: 'POST', 
+                cache: false,
+                async:false,
+                'contentType': 'application/json',
+                'data': JSON.stringify({
+                    'item': item,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'}),
+                'dataType': 'json',
+                success: function(data){
+                    //data = JSON.parse(data) 
+                    item_rate = JSON.parse(data['item_rate']) 
+                    parent.find('.item_rate').text(item_rate)
+                }
+            });*/ 
+
+            var total_qty = xs+s+m+l+xl+xxl+xxxl
+
+            if(isNaN(total_qty)){
+                total_qty=0
+            }
+            
+
+            $(this).parents('tr').find('.item_total_qty').text(total_qty)
+
+            var length = $('.item_total_qty').length
+            var sum = 0
+            for (i=0;i<length;i++){
+                sum += parseInt($('.item_total_qty:eq('+i+')').text())
+            }
+
+            $('.item_total').text(sum)
+            $('.so_item_total').val(sum)
+
+        })
+
+    });
+
+    $('.item_smt').click(function(){
+        var table = $('.item_tbl').tableToJSON();
+        var items = JSON.stringify(table);
+
+        var customer_id = $("select[name=so_customer]").val();
+        var order_no =  $("input[name=so_number]").val();
+        var reference_no = $("input[name=so_reference]").val();
+        var date =  $("input[name=so_date]").val();
+        var total = $('.so_item_total').val();
+        
+        $.ajax({
+            url: "/delivery-orders/add",
+            type: 'POST', 
+            cache: false,
+            async:false,
+            'contentType': 'application/json',
+            'data': JSON.stringify({
+                'items': $.parseJSON(items),
+                'order_no': order_no,
+                'reference_no': reference_no,
+                'date': date,
+                'customer_id': customer_id,
+                'total': total,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'}),
+            'dataType': 'json',
+            success: function(){
+                $('.message_div').html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Sales Order has been created</div>')
+                $(".message_div").attr("tabindex",-1).focus();
+            },
+            error: function(){
+                $('.message_div').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>Something went wrong!</div>')
+                $(".message_div").attr("tabindex",-1).focus();
+            }
+        });
+    });
+
+    </script>
+</body>
+
+</html>
